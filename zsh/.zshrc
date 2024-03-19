@@ -97,6 +97,7 @@ alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 
 #Git
+alias lg='lazygit'
 alias addup='git add -u'
 alias addall='git add .'
 alias branch='git branch'
