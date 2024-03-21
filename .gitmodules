@@ -4,6 +4,3 @@
 [submodule "astronvim_config"]
 	path = nvim_astro/.config/nvim/lua/user
 	url = git@github.com:AlexBlck/astronvim_config.git
-[submodule "ohmyzsh"]
-	path = zsh/.oh-my-zsh
-	url = https://github.com/ohmyzsh/ohmyzsh.git
