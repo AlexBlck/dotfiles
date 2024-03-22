@@ -20,9 +20,6 @@ nix-env -iA \
 	nixpkgs.zoxide \
 	nixpkgs.eza \
 
-# Use zsh
-sudo chsh -s $(which zsh) $USER
-
 # Bundle zsh plugins with antibody
 antibody bundle < zsh/.zsh_plugins.txt > zsh/.zsh_plugins.sh
 
