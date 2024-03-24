@@ -26,4 +26,4 @@ antibody bundle < zsh/.zsh_plugins.txt > zsh/.zsh_plugins.sh
 # Stow everything!
 stow nvim
 stow zsh
-stow tmux
+# stow tmux

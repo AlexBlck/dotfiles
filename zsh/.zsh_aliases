@@ -62,6 +62,7 @@ alias yaysyu="yay -Syu --noconfirm"              # update standard pkgs and AUR 
 alias unlock="sudo rm /var/lib/pacman/db.lck"    # remove pacman lock
 alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # remove orphaned packages
 alias pac='sudo pacman -Sy'
+alias yay='yay -Sy'
 
 #Get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
@@ -119,3 +120,6 @@ alias root='root -l'
 
 # NVIM
 alias vim='nvim'
+
+# Alsa mixer
+alias audio='ncpamixer'

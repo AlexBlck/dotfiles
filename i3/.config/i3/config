@@ -194,6 +194,8 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# floating exceptions
+for_window [class="Yad" instance="yad-calendar"] floating enable
 
 
 ####################################################################################################################
@@ -239,7 +241,8 @@ mode "resize" {
 #####################################################################################################################
 
 bindsym $mod+t exec --no-startup-id alacritty;focus
-bindsym $mod+c exec --no-startup-id brave;focus
+bindsym $mod+c exec --no-startup-id google-chrome-stable;focus
+bindsym $mod+x exec --no-startup-id nemo;focus
 
 bindsym control+mod1+u exec --no-startup-id pavucontrol
 
@@ -256,7 +259,7 @@ bindsym $mod+Shift+Return exec --no-startup-id nemo;focus
 # bindsym Ctrl+Shift+4 exec "escrotum -s -e 'xclip -selection clipboard -t image/png -i $f'"
 bindsym Ctrl+Shift+4 exec "escrotum -s -C"
 #| xclip -selection clipboard -t image/png -i
-bindsym $mod+Print exec maim --select | tee ~/Pictures/$(date +%s).png | xclip -sel c -t image/png
+# bindsym $mod+Print exec maim --select | tee ~/Pictures/$(date +%s).png | xclip -sel c -t image/png
 
 
 
@@ -373,35 +376,20 @@ exec_always --no-startup-id ~/.config/i3/scripts/mouse.sh
 
 exec_always --no-startup-id ~/.config/polybar/launch.sh dark
 
-# bar {
-#    	height 22
-# 	position top
-#         font pango:DejaVu Sans Mono, Font Awesome 6 Free 10
-# 	status_command i3status-rs ~/.config/i3status-rust/config.toml
-#         tray_padding 0
-#         strip_workspace_numbers yes
-#         colors {
-#                 statusline #00ff00
-#                 background #373e4d
-#                 inactive_workspace #68809a #373e4d #e5e9f0
-#                 focused_workspace #81a1c1 #4c566a #e5e9f0
-#         }
-#     }
-# include /etc/sway/config.d/*
 
-    ##START THEMING WM
+##START THEMING WM
 
-    # Window color settings
-    # class                 border  backgr. text    indicator
-    client.focused          #81a1c1 #81a1c1 #ffffff #81a1c1
-    client.unfocused        #2e3440 #1f222d #888888 #1f222d
-    client.focused_inactive #2e3440 #1f222d #888888 #1f222d
-    client.placeholder      #2e3440 #1f222d #888888 #1f222d
-    client.urgent           #900000 #900000 #ffffff #900000
+# Window color settings
+# class                 border  backgr. text    indicator
+client.focused          #81a1c1 #81a1c1 #ffffff #81a1c1
+client.unfocused        #2e3440 #1f222d #888888 #1f222d
+client.focused_inactive #2e3440 #1f222d #888888 #1f222d
+client.placeholder      #2e3440 #1f222d #888888 #1f222d
+client.urgent           #900000 #900000 #ffffff #900000
 
-    client.background       #242424
+client.background       #242424
 
-    ##STOP THEMING WM
+##STOP THEMING WM
 
 exec xset r rate 300 50 &
 
