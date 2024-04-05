@@ -1,19 +1,27 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
 # COMPLETION_WAITING_DOTS="true"
-autoload -Uz compinit && compinit
-autoload -Uz +X bashcompinit && bashcompinit
-setopt MENU_COMPLETE
-setopt COMPLETE_ALIASES
+autoload -Uz compinit
+compinit -u
+# autoload -Uz +X bashcompinit && bashcompinit
+# setopt MENU_COMPLETE
+# setopt COMPLETE_ALIASES
 
 # https://github.com/Jguer/yay/issues/1110
-zstyle ':completion::complete:*' gain-privileges 1
-zstyle ':completion:*' rehash true
+# zstyle ':completion:*' rehash true
 
 zstyle ':completion:*' menu select
+zstyle ':completion::complete:*' gain-privileges 1
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 # CASE_SENSITIVE=true
 
@@ -78,20 +86,22 @@ unset __conda_setup
 # zstyle ':completion:*' menu select matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # alacritty zsh completions
-fpath+=~/.zsh_functions
+# fpath+=~/.zsh_functions
+# fpath+=~/usr/share/zsh/site-functions
 
 # random tmux fixes
-# export TERM=screen-256color
+# export TERM=xterm-256color
 # export LC_ALL=en_IN.UTF-8
 # export LANG=en_IN.UTF-8
-# alias tmux="TERM=screen-256color-bce tmux"
+# alias tmux="TERM=xterm-256color tmux"
 
-# if [ "$TMUX" = "" ]; then tmux; fi
 
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # nvm use 19
+
+export OPEN_WEATHER_API_KEY="d0abe75261c27662320da8cb6b8e78c6"
 
 
 # CTRL-/ to toggle small preview window to see the full command

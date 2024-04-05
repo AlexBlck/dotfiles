@@ -196,6 +196,7 @@ bindsym $mod+a focus parent
 
 # floating exceptions
 for_window [class="Yad" instance="yad-calendar"] floating enable
+for_window [title="AlexDev"] floating enable
 
 
 ####################################################################################################################
