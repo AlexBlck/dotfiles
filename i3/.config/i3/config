@@ -241,7 +241,7 @@ mode "resize" {
 #################                          applications keyboard shortcuts                          #################
 #####################################################################################################################
 
-bindsym $mod+t exec --no-startup-id alacritty;focus
+bindsym $mod+t exec --no-startup-id alacritty -e tmux;focus
 bindsym $mod+c exec --no-startup-id google-chrome-stable;focus
 bindsym $mod+x exec --no-startup-id nemo;focus
 
