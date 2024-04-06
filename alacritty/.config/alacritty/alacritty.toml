@@ -7,18 +7,18 @@ import = [
 ]
 
 [font]
-size = 14.0
+size = 14.4
 
 [font.glyph_offset]
 x = 0
 y = 0
 
 [font.normal]
-family = "MesloLGS NF"
+family = "Fira Code Nerd Font"
 style = "Medium"
 
 [font.bold]
-family = "FiraMono Nerd Font"
+family = "Fira Code Nerd Font"
 style = "Bold"
 
 
