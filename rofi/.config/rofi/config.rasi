@@ -160,4 +160,5 @@ listview {
 window {
 	width: 30%;
 }
-@theme "/home/alex/.local/share/rofi/themes/rounded-nord-dark.rasi"
+//@theme "/home/alex/.local/share/rofi/themes/rounded-nord-dark.rasi"
+@theme "/home/alex/.local/share/rofi/themes/rounded-purple-dark.rasi"
