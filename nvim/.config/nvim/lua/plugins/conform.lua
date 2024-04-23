@@ -8,7 +8,7 @@ return { -- Autoforma;
 			-- languages here or re-enable it for the disabled ones.
 			local disable_filetypes = { c = true, cpp = true }
 			return {
-				timeout_ms = 500,
+				timeout_ms = 2500,
 				lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 			}
 		end,
@@ -21,13 +21,14 @@ return { -- Autoforma;
 			-- is found.
 			-- javascript = { { "prettierd", "prettier" } },
 			tex = { "latexindent" },
+			css = { "prettierd" },
 		},
 		-- Customize formatters
 		formatters = {
 			latexindent = {
 				inherit = false,
 				command = "latexindent",
-				args = { "-m", "-l", "$HOME/.latexindent.yaml", "-" },
+				args = { "-m", "-l", "/home/alex/.latexindent.yaml", "-" },
 				stdin = true,
 			},
 		},

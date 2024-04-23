@@ -15,7 +15,31 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- Oneliners
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+	"tmux-plugins/vim-tmux",
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
 	{ "numToStr/Comment.nvim", opts = {} },
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
+	},
 
 	-- Bigger plugins
 	require("plugins.gitsigns"),
@@ -28,6 +52,7 @@ require("lazy").setup({
 	require("plugins.todo-comments"),
 	require("plugins.mini"),
 	require("plugins.treesitter"),
+	require("plugins.copilot"),
 
 	-- More optional plugins
 	require("plugins.vimtex"),

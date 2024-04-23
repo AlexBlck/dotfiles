@@ -123,3 +123,6 @@ alias vim='nvim'
 
 # Alsa mixer
 alias audio='ncpamixer'
+
+# Mojo
+alias mojo='LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/alex/.local/lib/mojo /home/alex/.modular/pkg/packages.modular.com_mojo/bin/mojo'

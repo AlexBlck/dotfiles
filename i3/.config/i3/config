@@ -25,7 +25,7 @@ set $down j
 set $left h
 set $right l
 
-font pango:OperatorMono Nerd Font 0
+font pango:OperatorMono Nerd Font 14
 
 
 
@@ -285,8 +285,8 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86MonBrightnessUp exec light -A 1 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 1 # decrease screen brightness
 # bind ddcutil to F1 and F2
-bindsym $mod+F9 exec ddcutil setvcp 10 - 20 && touch /home/alex/.config/i3status-rust/brightness
-bindsym $mod+F10 exec ddcutil setvcp 10 + 20 && touch /home/alex/.config/i3status-rust/brightness
+bindsym Mod1+Ctrl+Shift+J exec ddcutil setvcp 10 + 20
+bindsym Mod1+Ctrl+Shift+M exec ddcutil setvcp 10 - 20
 # toggle between blue-light reducing modes
 bindsym $mod+F11 exec --no-startup-id /home/alex/.config/i3/brightness_toggle.sh
 
@@ -362,9 +362,10 @@ mode "$mode_gaps_outer" {
 #####################################################################################################################
 
 #if you want transparency on non-focused windows, ...
-exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
-exec_always --no-startup-id nitrogen --restore
-exec_always --no-startup-id ~/.config/i3/scripts/mouse.sh
+# exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
+exec_always --no-startup-id swaybg -i ~/Pictures/arch-black-4k.png
+# exec_always --no-startup-id nitrogen --restore
+# exec_always --no-startup-id ~/.config/i3/scripts/mouse.sh
 
 
 #####################################################################################################################
@@ -375,7 +376,8 @@ exec_always --no-startup-id ~/.config/i3/scripts/mouse.sh
 #####################################################################################################################
 #####################################################################################################################
 
-exec_always --no-startup-id ~/.config/polybar/launch.sh dark
+# exec_always --no-startup-id ~/.config/polybar/launch.sh dark
+exec_always --no-startup-id waybar
 
 
 ##START THEMING WM
