@@ -16,6 +16,7 @@ require("lazy").setup({
 	-- Oneliners
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	"tmux-plugins/vim-tmux",
+	"chaimleib/vim-renpy",
 	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()

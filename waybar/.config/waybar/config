@@ -26,9 +26,8 @@
     },
     "clock": {
         "timezone": "Europe/London",
-        "tooltip-format": "{:%Y-%m-%d | %H:%M}",
-        "format-alt": "{:%Y-%m-%d}",
-        "format": "{:%Y-%m-%d | %H:%M}"
+        "tooltip-format": "{:%d-%m-%Y | %H:%M}",
+        "format": "{:%d-%m-%Y | %H:%M}"
     },
     "cpu": {
         "format": "{usage}% "
@@ -77,8 +76,8 @@
         "format-muted": "",
         "format-icons": {
             "headphones": "",
-            "handsfree": "",
-            "headset": "",
+            "handsfree": "",
+            "headset": "󰥰",
             "phone": "",
             "portable": "",
             "car": "",

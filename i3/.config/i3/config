@@ -258,7 +258,8 @@ bindsym $mod+Shift+Return exec --no-startup-id nemo;focus
 # bindsym Print exec scrot -s -e \\'xclip -selection clipboard -t image/png -i $f\\'
 # The above command doesnt work, the correct way to take a screenshot to clipboard with scrot is
 # bindsym Ctrl+Shift+4 exec "escrotum -s -e 'xclip -selection clipboard -t image/png -i $f'"
-bindsym Ctrl+Shift+4 exec "escrotum -s -C"
+# bindsym Ctrl+Shift+4 exec "escrotum -s -C"
+bindsym Ctrl+Shift+4 exec grim -g "$(slurp -d)" - | wl-copy -t image/png
 #| xclip -selection clipboard -t image/png -i
 # bindsym $mod+Print exec maim --select | tee ~/Pictures/$(date +%s).png | xclip -sel c -t image/png
 
