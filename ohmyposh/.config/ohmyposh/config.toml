@@ -32,6 +32,7 @@ type = "os"
 [[blocks.segments]]
 background = "p:blue"
 foreground = "p:text"
+trailing_diamond = "\ue0b0"
 style = "diamond"
 template = " {{ .Path }} "
 type = "path"
@@ -49,7 +50,8 @@ background_templates = [
   "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}",
 ]
 foreground = "p:text"
-style = "powerline"
+style = "diamond"
+trailing_diamond = "\ue0b0"
 powerline_symbol = "\ue0b0"
 template = " {{ .HEAD }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }} "
 type = "git"
@@ -119,3 +121,13 @@ foreground = "p:text"
 style = "plain"
 template = "\u2570\u2500"
 type = "text"
+
+# [[blocks]]
+# type = "rprompt"
+# alignment = "right"
+
+# [[blocks.segments]]
+# foreground = "p:text"
+# style = "plain"
+# template = "\u2500\u256f"
+# type = "text"
