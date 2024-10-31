@@ -1,13 +1,11 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
 # COMPLETION_WAITING_DOTS="true"
@@ -120,7 +118,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
 
 # Use Nix
-. $HOME/.nix-profile/etc/profile.d/nix.sh 
+. $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # Plugins built with antibody
 # source ~/.zsh_plugins.sh
@@ -129,3 +127,6 @@ antibody bundle < ~/.zsh_plugins.txt
 
 # Alias z to cd (zoxide)
 eval "$(zoxide init --cmd cd zsh)"
+
+# oh-my-posh
+eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.toml)"
