@@ -11,11 +11,19 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- godot jumping to file
+local gdproject = io.open(vim.fn.getcwd() .. "/project.godot", "r")
+if gdproject then
+	io.close(gdproject)
+	vim.fn.serverstart("./godothost")
+end
+
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
 	-- Oneliners
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	"tmux-plugins/vim-tmux",
+	"habamax/vim-godot",
 	"chaimleib/vim-renpy",
 	{
 		"norcalli/nvim-colorizer.lua",
@@ -41,11 +49,41 @@ require("lazy").setup({
 			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 		},
 	},
+	-- tests
+	-- "mfussenegger/nvim-dap",
+	-- {
+	-- 	"mfussenegger/nvim-dap-python",
+	-- 	config = function()
+	-- 		require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
+	-- 	end,
+	-- },
+	"nvim-neotest/neotest-python",
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = {
+					require("neotest-python")({
+						dap = { justMyCode = false },
+						runner = "pytest",
+						python = "python3",
+					}),
+				},
+			})
+		end,
+	},
 
 	-- Bigger plugins
 	require("plugins.gitsigns"),
 	require("plugins.which-key"),
 	require("plugins.telescope"),
+	require("plugins.debug"),
 	require("plugins.lspconfig"),
 	require("plugins.conform"),
 	require("plugins.cmp"),
@@ -53,7 +91,6 @@ require("lazy").setup({
 	require("plugins.todo-comments"),
 	require("plugins.mini"),
 	require("plugins.treesitter"),
-	require("plugins.copilot"),
 
 	-- More optional plugins
 	require("plugins.vimtex"),

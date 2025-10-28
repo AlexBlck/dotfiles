@@ -1,0 +1,133 @@
+schema = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+final_space = true
+version = 2
+
+[palette]
+os = "#ACB0BE"
+pink = "#F5BDE6"
+lavender = "#B7BDF8"
+blue = "#8AADF4"
+wight = "#FFFFFF"
+text = "#494D64"
+yellow = "#EED49F"
+green = "#A6E3A1"
+red = "#F38BA8"
+peach = "#FAB387"
+flamingo = "#F2CDCD"
+rosewater = "#F5E0DC"
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+
+[[blocks.segments]]
+background = "p:text"
+foreground = "p:wight"
+leading_diamond = "\u256d\u2500\ue0b6"
+trailing_diamond = "\ue0b0"
+style = "diamond"
+template = " {{ .Icon }} "
+type = "os"
+
+[[blocks.segments]]
+background = "p:blue"
+foreground = "p:text"
+trailing_diamond = "\ue0b0"
+style = "diamond"
+template = " {{ .Path }} "
+type = "path"
+
+[blocks.segments.properties]
+folder_icon = " \uf07b "
+home_icon = "~"
+folder_separator_icon = "/"
+style = "full"
+edge_format = "<b>%s</b>"
+
+[[blocks.segments]]
+background = "p:green"
+background_templates = [
+  "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}",
+]
+foreground = "p:text"
+style = "diamond"
+trailing_diamond = "\ue0b0"
+powerline_symbol = "\ue0b0"
+template = " {{ .HEAD }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }} "
+type = "git"
+
+[blocks.segments.properties]
+branch_icon = "\ue725 "
+cherry_pick_icon = "\ue29b "
+commit_icon = "\uf417 "
+fetch_status = true
+fetch_upstream_icon = true
+merge_icon = "\ue727 "
+no_commits_icon = "\uf0c3 "
+rebase_icon = "\ue728 "
+revert_icon = "\uf0e2 "
+tag_icon = "\uf412 "
+
+[[blocks]]
+type = "prompt"
+alignment = "right"
+filler = "<p:text,#24273A>\u2500</>"
+
+[[blocks.segments]]
+background = "p:text"
+foreground = "p:green"
+foreground_templates = ["{{ if .Error }}p:red{{ end }}"]
+leading_diamond = "\ue0b2"
+style = "diamond"
+type = "status"
+template = " {{ if eq .Code 0 }}\u2714{{ else }}\uf071 {{ reason .Code }}{{ end }} "
+
+[blocks.segments.properties]
+always_enabled = true
+
+[[blocks.segments]]
+background = "p:blue"
+foreground = "p:text"
+leading_diamond = "\ue0b2"
+template = " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ end }}\ue73c "
+style = "diamond"
+type = "python"
+
+[[blocks.segments]]
+background = "p:yellow"
+foreground = "p:text"
+powerline_symbol = "\ue0b2"
+invert_powerline = true
+style = "accordion"
+template = "{{ if .SSHSession }} {{ .UserName }}@{{ .HostName }} {{ end }}"
+type = "session"
+
+[[blocks.segments]]
+background = "p:text"
+foreground = "p:flamingo"
+powerline_symbol = "\ue0b2"
+trailing_diamond = "\ue0b4"
+invert_powerline = true
+style = "diamond"
+type = "time"
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+newline = true
+
+[[blocks.segments]]
+foreground = "p:text"
+style = "plain"
+template = "\u2570\u2500"
+type = "text"
+
+# [[blocks]]
+# type = "rprompt"
+# alignment = "right"
+
+# [[blocks.segments]]
+# foreground = "p:text"
+# style = "plain"
+# template = "\u2500\u256f"
+# type = "text"

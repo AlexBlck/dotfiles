@@ -22,6 +22,7 @@ return { -- Autoforma;
 			-- javascript = { { "prettierd", "prettier" } },
 			tex = { "latexindent" },
 			css = { "prettierd" },
+			gdscript = { "gdformat" },
 		},
 		-- Customize formatters
 		formatters = {

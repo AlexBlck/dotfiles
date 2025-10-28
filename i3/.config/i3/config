@@ -197,6 +197,8 @@ bindsym $mod+a focus parent
 # floating exceptions
 for_window [class="Yad" instance="yad-calendar"] floating enable
 for_window [title="AlexDev"] floating enable
+for_window [class="Godot"] floating enable
+for_window [class="Godot" title=".*Godot Engine.*"] floating disable
 
 
 ####################################################################################################################
@@ -244,6 +246,7 @@ mode "resize" {
 bindsym $mod+t exec --no-startup-id alacritty -e tmux;focus
 bindsym $mod+c exec --no-startup-id google-chrome-stable;focus
 bindsym $mod+x exec --no-startup-id nemo;focus
+
 
 bindsym control+mod1+u exec --no-startup-id pavucontrol
 

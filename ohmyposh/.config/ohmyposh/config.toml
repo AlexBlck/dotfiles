@@ -1,133 +1,138 @@
-schema = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+version = 3
 final_space = true
-version = 2
 
 [palette]
-os = "#ACB0BE"
-pink = "#F5BDE6"
-lavender = "#B7BDF8"
-blue = "#8AADF4"
-wight = "#FFFFFF"
-text = "#494D64"
-yellow = "#EED49F"
-green = "#A6E3A1"
-red = "#F38BA8"
-peach = "#FAB387"
-flamingo = "#F2CDCD"
-rosewater = "#F5E0DC"
+  blue = '#8AADF4'
+  flamingo = '#F2CDCD'
+  green = '#A6E3A1'
+  lavender = '#B7BDF8'
+  os = '#ACB0BE'
+  peach = '#FAB387'
+  pink = '#F5BDE6'
+  red = '#F38BA8'
+  rosewater = '#F5E0DC'
+  text = '#494D64'
+  wight = '#FFFFFF'
+  yellow = '#EED49F'
 
 [[blocks]]
-type = "prompt"
-alignment = "left"
+  type = 'prompt'
+  alignment = 'left'
 
-[[blocks.segments]]
-background = "p:text"
-foreground = "p:wight"
-leading_diamond = "\u256d\u2500\ue0b6"
-trailing_diamond = "\ue0b0"
-style = "diamond"
-template = " {{ .Icon }} "
-type = "os"
+  [[blocks.segments]]
+    leading_diamond = '╭─'
+    trailing_diamond = ''
+    template = ' {{ .Icon }} '
+    foreground = 'p:wight'
+    background = 'p:text'
+    type = 'os'
+    style = 'diamond'
 
-[[blocks.segments]]
-background = "p:blue"
-foreground = "p:text"
-trailing_diamond = "\ue0b0"
-style = "diamond"
-template = " {{ .Path }} "
-type = "path"
+    [blocks.segments.properties]
+      cache_duration = 'none'
 
-[blocks.segments.properties]
-folder_icon = " \uf07b "
-home_icon = "~"
-folder_separator_icon = "/"
-style = "full"
-edge_format = "<b>%s</b>"
+  [[blocks.segments]]
+    trailing_diamond = ''
+    template = ' {{ .Path }} '
+    foreground = 'p:text'
+    background = 'p:blue'
+    type = 'path'
+    style = 'diamond'
 
-[[blocks.segments]]
-background = "p:green"
-background_templates = [
-  "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}",
-]
-foreground = "p:text"
-style = "diamond"
-trailing_diamond = "\ue0b0"
-powerline_symbol = "\ue0b0"
-template = " {{ .HEAD }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }} "
-type = "git"
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      edge_format = '<b>%s</b>'
+      folder_icon = '  '
+      folder_separator_icon = '/'
+      home_icon = '~'
+      style = 'full'
 
-[blocks.segments.properties]
-branch_icon = "\ue725 "
-cherry_pick_icon = "\ue29b "
-commit_icon = "\uf417 "
-fetch_status = true
-fetch_upstream_icon = true
-merge_icon = "\ue727 "
-no_commits_icon = "\uf0c3 "
-rebase_icon = "\ue728 "
-revert_icon = "\uf0e2 "
-tag_icon = "\uf412 "
+  [[blocks.segments]]
+    trailing_diamond = ''
+    template = ' {{ .HEAD }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }} '
+    foreground = 'p:text'
+    powerline_symbol = ''
+    background = 'p:green'
+    type = 'git'
+    style = 'diamond'
+    background_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}']
 
-[[blocks]]
-type = "prompt"
-alignment = "right"
-filler = "<p:text,#24273A>\u2500</>"
-
-[[blocks.segments]]
-background = "p:text"
-foreground = "p:green"
-foreground_templates = ["{{ if .Error }}p:red{{ end }}"]
-leading_diamond = "\ue0b2"
-style = "diamond"
-type = "status"
-template = " {{ if eq .Code 0 }}\u2714{{ else }}\uf071 {{ reason .Code }}{{ end }} "
-
-[blocks.segments.properties]
-always_enabled = true
-
-[[blocks.segments]]
-background = "p:blue"
-foreground = "p:text"
-leading_diamond = "\ue0b2"
-template = " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ end }}\ue73c "
-style = "diamond"
-type = "python"
-
-[[blocks.segments]]
-background = "p:yellow"
-foreground = "p:text"
-powerline_symbol = "\ue0b2"
-invert_powerline = true
-style = "accordion"
-template = "{{ if .SSHSession }} {{ .UserName }}@{{ .HostName }} {{ end }}"
-type = "session"
-
-[[blocks.segments]]
-background = "p:text"
-foreground = "p:flamingo"
-powerline_symbol = "\ue0b2"
-trailing_diamond = "\ue0b4"
-invert_powerline = true
-style = "diamond"
-type = "time"
+    [blocks.segments.properties]
+      branch_icon = ' '
+      cache_duration = 'none'
+      cherry_pick_icon = ' '
+      commit_icon = ' '
+      fetch_status = true
+      fetch_upstream_icon = true
+      merge_icon = ' '
+      no_commits_icon = ' '
+      rebase_icon = ' '
+      revert_icon = ' '
+      tag_icon = ' '
 
 [[blocks]]
-type = "prompt"
-alignment = "left"
-newline = true
+  type = 'prompt'
+  alignment = 'right'
+  filler = '<p:text,#24273A>─</>'
 
-[[blocks.segments]]
-foreground = "p:text"
-style = "plain"
-template = "\u2570\u2500"
-type = "text"
+  [[blocks.segments]]
+    leading_diamond = ''
+    template = ' {{ if eq .Code 0 }}✔{{ else }} {{ reason .Code }}{{ end }} '
+    foreground = 'p:green'
+    background = 'p:text'
+    type = 'status'
+    style = 'diamond'
+    foreground_templates = ['{{ if .Error }}p:red{{ end }}']
 
-# [[blocks]]
-# type = "rprompt"
-# alignment = "right"
+    [blocks.segments.properties]
+      always_enabled = true
+      cache_duration = 'none'
 
-# [[blocks.segments]]
-# foreground = "p:text"
-# style = "plain"
-# template = "\u2500\u256f"
-# type = "text"
+  [[blocks.segments]]
+    leading_diamond = ''
+    template = ' {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ end }} '
+    foreground = 'p:text'
+    background = 'p:blue'
+    type = 'python'
+    style = 'diamond'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+  [[blocks.segments]]
+    template = '{{ if .SSHSession }} {{ .UserName }}@{{ .HostName }} {{ end }}'
+    foreground = 'p:text'
+    powerline_symbol = ''
+    background = 'p:yellow'
+    type = 'session'
+    style = 'accordion'
+    invert_powerline = true
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+  [[blocks.segments]]
+    trailing_diamond = ''
+    foreground = 'p:flamingo'
+    powerline_symbol = ''
+    background = 'p:text'
+    type = 'time'
+    style = 'diamond'
+    invert_powerline = true
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    template = '╰─'
+    foreground = 'p:text'
+    type = 'text'
+    style = 'plain'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'

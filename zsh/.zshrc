@@ -26,6 +26,15 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 export NVM_COMPLETION=true
 export NVM_DIR=${HOME}/.nvm
 
+# OBS
+
+# export XDG_CURRENT_DESKTOP=sway
+# export XDG_SESSION_DESKTOP=sway
+# export XDG_SESSION_TYPE=wayland
+# export MOZ_ENABLE_WAYLAND=1
+# export QT_QPA_PLATFORM=wayland
+# export WAYLAND_DISPLAY=wayland-1
+
 #RPROMPT='%*'
 
 # History
@@ -61,25 +70,6 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 # Source aliases
 source ~/.zsh_aliases
 
-# Python test boilerplate
-alias leet='mkdir -p tests task && touch tests/__init__.py tests/test_task.py task/__init__.py task/task.py setup.cfg' #&& echo "import pytest" > tests/test_task.py && echo "def test_task():\n    assert True" >> tests/test_task.py && echo "def task():\n    pass" >> task/task.py && vim tests/test_task.py task/task.py && '
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
 #zstyle ':completion:*' menu select
 # zstyle ':completion:*' menu select matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
@@ -98,9 +88,6 @@ unset __conda_setup
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # nvm use 19
-
-export OPEN_WEATHER_API_KEY="d0abe75261c27662320da8cb6b8e78c6"
-
 
 # CTRL-/ to toggle small preview window to see the full command
 # CTRL-Y to copy the command into clipboard using pbcopy
@@ -130,3 +117,10 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # oh-my-posh
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.toml)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/mnt/nvme/projects/atmosphere/google-cloud-sdk/path.zsh.inc' ]; then . '/mnt/nvme/projects/atmosphere/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/mnt/nvme/projects/atmosphere/google-cloud-sdk/completion.zsh.inc' ]; then . '/mnt/nvme/projects/atmosphere/google-cloud-sdk/completion.zsh.inc'; fi
+export GTK_THEME=cattpuccin-gtk-theme-mocha
