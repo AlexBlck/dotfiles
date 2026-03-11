@@ -15,4 +15,4 @@ else
 fi
 
 cd "$DOTFILES"
-sh install.sh
+bash install.sh
