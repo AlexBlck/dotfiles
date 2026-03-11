@@ -94,6 +94,9 @@ require("lazy").setup({
 
 	-- More optional plugins
 	require("plugins.vimtex"),
+	require("plugins.claude-code"),
+	require("plugins.neo-tree"),
+	require("plugins.lazygit"),
 
 	--    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
 	-- { import = 'custom.plugins' },

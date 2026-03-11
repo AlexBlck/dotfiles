@@ -7,23 +7,29 @@ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 # Install packages
 nix-env -iA \
 	nixpkgs.zsh \
-	nixpkgs.antibody \
+	nixpkgs.antidote \
 	nixpkgs.stow \
 	nixpkgs.neovim \
 	nixpkgs.lazygit \
 	nixpkgs.bat \
-	nixpkgs.nodejs_18 \
+	nixpkgs.nodejs_24 \
 	nixpkgs.bottom \
 	nixpkgs.ripgrep \
 	nixpkgs.gdu \
 	nixpkgs.fzf \
 	nixpkgs.zoxide \
 	nixpkgs.eza \
+	nixpkgs.oh-my-posh \
 
 # Bundle zsh plugins with antibody
-antibody bundle < zsh/.zsh_plugins.txt > zsh/.zsh_plugins.sh
+antidote bundle < zsh/.zsh_plugins.txt > zsh/.zsh_plugins.sh
 
 # Stow everything!
 stow nvim
 stow zsh
-# stow tmux
+stow tmux
+stow ohmyposh
+
+# Install TPM and tmux plugins
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm --depth=1 2>/dev/null || true
+~/.config/tmux/plugins/tpm/scripts/install_plugins.sh

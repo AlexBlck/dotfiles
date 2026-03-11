@@ -47,8 +47,8 @@ alias ld='eza -lD'                #List directories
 alias l.='eza -a | egrep "^\."'   #List only hidden directories and files
 
 #Move and copy with progress bar
-alias mv='mvg -g'
-alias cp='cpg -g'
+# alias mv='mvg -g'
+# alias cp='cpg -g'
 
 #Bat cat
 alias cat='bat'
@@ -130,4 +130,4 @@ alias mojo='LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/alex/.local/lib/mojo /home/al
 # Python test boilerplate
 alias leet='mkdir -p tests task && touch tests/__init__.py tests/test_task.py task/__init__.py task/task.py setup.cfg' #&& echo "import pytest" > tests/test_task.py && echo "def test_task():\n    assert True" >> tests/test_task.py && echo "def task():\n    pass" >> task/task.py && vim tests/test_task.py task/task.py && '
 
-alias claude='cp ~/.dotfiles/CLAUDE.md .'
+# alias claude='cp ~/.dotfiles/CLAUDE.md .'

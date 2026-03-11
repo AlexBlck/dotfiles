@@ -70,6 +70,9 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 # Source aliases
 source ~/.zsh_aliases
 
+# Source environment variables from ~/.env
+[ -f ~/.env ] && set -a && source ~/.env && set +a
+
 #zstyle ':completion:*' menu select
 # zstyle ':completion:*' menu select matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
@@ -107,10 +110,9 @@ export FZF_DEFAULT_OPTS=" \
 # Use Nix
 . $HOME/.nix-profile/etc/profile.d/nix.sh
 
-# Plugins built with antibody
-# source ~/.zsh_plugins.sh
-source <(antibody init)
-antibody bundle < ~/.zsh_plugins.txt
+# Plugins built with antidote
+source /home/alex/.nix-profile/share/antidote/antidote.zsh
+antidote load < ~/.zsh_plugins.txt
 
 # Alias z to cd (zoxide)
 eval "$(zoxide init --cmd cd zsh)"
@@ -124,3 +126,5 @@ if [ -f '/mnt/nvme/projects/atmosphere/google-cloud-sdk/path.zsh.inc' ]; then . 
 # The next line enables shell command completion for gcloud.
 if [ -f '/mnt/nvme/projects/atmosphere/google-cloud-sdk/completion.zsh.inc' ]; then . '/mnt/nvme/projects/atmosphere/google-cloud-sdk/completion.zsh.inc'; fi
 export GTK_THEME=cattpuccin-gtk-theme-mocha
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/home/alex/.cargo/bin:$PATH"
