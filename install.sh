@@ -5,6 +5,10 @@ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 # Source Nix
 . ~/.nix-profile/etc/profile.d/nix.sh
 
+# Add nixpkgs channel
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+nix-channel --update
+
 # Install packages
 nix-env -iA \
 	nixpkgs.zsh \
