@@ -25,9 +25,7 @@ nix-env -iA \
 	nixpkgs.zoxide \
 	nixpkgs.eza \
 	nixpkgs.oh-my-posh \
-
-# Bundle zsh plugins with antibody
-antidote bundle < zsh/.zsh_plugins.txt > zsh/.zsh_plugins.sh
+	nixpkgs.tmux \
 
 # Stow everything!
 stow nvim
@@ -37,4 +35,6 @@ stow ohmyposh
 
 # Install TPM and tmux plugins
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm --depth=1 2>/dev/null || true
-~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+if command -v tmux >/dev/null 2>&1; then
+    ~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+fi
