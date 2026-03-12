@@ -100,12 +100,12 @@ final_space = true
       cache_duration = 'none'
 
   [[blocks.segments]]
-    template = '{{ if .SSHSession }} {{ .UserName }}@{{ .HostName }} {{ end }}'
+    template = ' {{ .HostName }} '
     foreground = 'p:text'
     powerline_symbol = ''
     background = 'p:yellow'
     type = 'session'
-    style = 'accordion'
+    style = 'powerline'
     invert_powerline = true
 
     [blocks.segments.properties]
