@@ -8,20 +8,24 @@
 // machines shows once (the freshest reading wins).
 import { readTextFile, exec, home, machines } from "herdr";
 
+// \x01 (SOH) marks each section: unlike "@", it can't collide with an
+// account email, a URL, or anything else that shows up in the payloads.
+const SOH = "";
+
 const REMOTE = [
-  "printf '@claude\\n'; cat ~/.cache/agent-limits/claude.json 2>/dev/null",
-  "printf '\\n@codex\\n'; f=$(find ~/.codex/sessions -name '*.jsonl' -mtime -8 2>/dev/null | xargs -r ls -t 2>/dev/null | head -1);" +
+  "printf '\\001claude\\n'; cat ~/.cache/agent-limits/claude.json 2>/dev/null",
+  "printf '\\n\\001codex\\n'; f=$(find ~/.codex/sessions -name '*.jsonl' -mtime -8 2>/dev/null | xargs -r ls -t 2>/dev/null | head -1);" +
     " [ -n \"$f\" ] && grep -o '\"rate_limits\":{.*' \"$f\" | tail -1",
-  "printf '\\n@codexacct\\n'; grep -o '\"account_id\": *\"[^\"]*\"' ~/.codex/auth.json 2>/dev/null | head -1",
+  "printf '\\n\\001codexacct\\n'; grep -o '\"account_id\": *\"[^\"]*\"' ~/.codex/auth.json 2>/dev/null | head -1",
 ].join("; ");
 
 // The same Codex lookup for this computer when it's Windows.
 const LOCAL_CODEX = [
   "$d = Join-Path $env:USERPROFILE '.codex\\sessions'",
-  "'@codex'",
+  "[char]1 + 'codex'",
   "if (Test-Path $d) { $f = Get-ChildItem $d -Recurse -Filter *.jsonl -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-8) } | Sort-Object LastWriteTime -Descending | Select-Object -First 1;" +
     " if ($f) { $m = Select-String -Path $f.FullName -Pattern '\"rate_limits\":\\{.*' -AllMatches | Select-Object -Last 1; if ($m) { $m.Matches[-1].Value } } }",
-  "'@codexacct'",
+  "[char]1 + 'codexacct'",
   "$a = Join-Path $env:USERPROFILE '.codex\\auth.json'; if (Test-Path $a) { (Select-String -Path $a -Pattern '\"account_id\": *\"[^\"]*\"' | Select-Object -First 1).Matches[0].Value }",
 ].join("; ");
 
@@ -39,7 +43,7 @@ function objectAt(text, start) {
 }
 
 function section(out, name) {
-  const m = out.split(/\n?@/).find((s) => s.startsWith(name + "\n"));
+  const m = out.split(new RegExp(`\\n?${SOH}`)).find((s) => s.startsWith(name + "\n"));
   return m ? m.slice(name.length + 1).trim() : "";
 }
 
