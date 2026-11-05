@@ -38,6 +38,9 @@ case "${1:-}" in
   pull)
     copy_tree "$win_cfg" "$repo_cfg"
     mkdir -p "$repo_bin" && cp "$win_bin/agent_limits_statusline.py" "$repo_bin/"
+    # Files copied off the Windows drive come out executable; keep git modes normal.
+    find "$repo_cfg" -type f -exec chmod 644 {} +
+    chmod 755 "$repo_bin/agent_limits_statusline.py"
     ;;
   push)
     copy_tree "$repo_cfg" "$win_cfg"
