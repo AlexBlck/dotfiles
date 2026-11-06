@@ -57,6 +57,8 @@ case "${1:-}" in
     mkdir -p "$repo_bin" && cp "$win_bin/agent_limits_statusline.py" "$repo_bin/"
     # Files copied off the Windows drive come out executable; keep git modes normal.
     find "$repo_cfg" -type f -exec chmod 644 {} +
+    # Windows editors write CRLF; keep the repo LF.
+    find "$repo_cfg" "$repo_bin" -type f \( -name "*.js" -o -name "*.json" -o -name "*.svg" -o -name "*.md" -o -name "*.py" \) -exec sed -i 's/\r$//' {} +
     chmod 755 "$repo_bin/agent_limits_statusline.py"
     ;;
   push)
