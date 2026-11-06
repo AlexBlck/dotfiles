@@ -62,11 +62,29 @@ try:
 except Exception:
     pass
 
+# Keep a window this update left out (or reported behind) from the last record,
+# as long as that window hasn't reset yet: later reset wins, else higher use.
+current = {k: {"used": v.get("used_percentage"), "resets_at": v.get("resets_at")} for k, v in windows.items()}
+try:
+    with open(out, encoding="utf-8") as f:
+        old = json.load(f)
+    now = time.time()
+    for k in ("five_hour", "seven_day"):
+        o = old.get(k)
+        if not isinstance(o, dict) or not o.get("resets_at") or o["resets_at"] <= now:
+            continue
+        c = current.get(k)
+        if (c is None or not c.get("resets_at") or o["resets_at"] > c["resets_at"]
+                or (o["resets_at"] == c["resets_at"] and (o.get("used") or 0) > (c.get("used") or 0))):
+            current[k] = o
+except Exception:
+    pass
+
 record = {
     "tool": "claude",
     "account": account,
     "updated": int(time.time()),
-    **{k: {"used": v.get("used_percentage"), "resets_at": v.get("resets_at")} for k, v in windows.items()},
+    **current,
 }
 
 write_json(out, record)

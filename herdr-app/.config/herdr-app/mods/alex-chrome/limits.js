@@ -5,7 +5,7 @@
 //           ~/.local/bin/agent_limits_statusline.py on each Claude Code update.
 //   Codex:  the newest ~/.codex/sessions rollout's `rate_limits` event.
 // Rows are per account, not per machine: the same account seen on two
-// machines shows once (the freshest reading wins).
+// machines shows once (each window's most current reading wins).
 import { readTextFile, exec, home, machines } from "herdr";
 
 // \x01 (SOH) marks each section: unlike "@", it can't collide with an
@@ -97,15 +97,27 @@ export async function readLimits(log = () => {}) {
     } catch (e) { log(`exec ${m.name} ERR ${e}`); }
   }
   log(`rows ${rows.filter(Boolean).length}`);
+  // Merge readings of one account window by window: a reading can lack a window
+  // (Claude sometimes reports only the weekly one) or lag behind another machine's.
   const best = new Map();
   for (const r of rows.filter(Boolean)) {
     const prev = best.get(r.key);
-    if (!prev || r.updated > prev.updated) best.set(r.key, r);
+    best.set(r.key, prev ? { ...(r.updated > prev.updated ? r : prev), updated: Math.max(r.updated, prev.updated),
+      five: newer(prev.five, r.five), week: newer(prev.week, r.week) } : r);
   }
   const list = [...best.values()].sort((a, b) => a.tool.localeCompare(b.tool));
   // Only name the account when one tool has several.
   for (const r of list) if (list.filter((o) => o.tool === r.tool).length < 2) r.sub = null;
   return list;
+}
+
+// The more current of two readings of one window: the later reset (a newer window),
+// else the higher use (use only grows within a window).
+function newer(a, b) {
+  if (!a?.resets) return b?.resets ? b : a ?? b;
+  if (!b?.resets) return a;
+  if (a.resets !== b.resets) return a.resets > b.resets ? a : b;
+  return (b.used ?? 0) > (a.used ?? 0) ? b : a;
 }
 
 // A window whose reset time has passed is back at 0.

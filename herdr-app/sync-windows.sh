@@ -10,7 +10,7 @@
 set -euo pipefail
 
 here="$(cd "$(dirname "$0")" && pwd)"
-win_home="${WIN_HOME:-/mnt/c/Users/$(cmd.exe /c 'echo %USERNAME%' 2>/dev/null | tr -d '\r')}"
+win_home="${WIN_HOME:-/mnt/c/Users/$(cmd.exe /c 'echo %USERNAME%' </dev/null 2>/dev/null | tr -d '\r')}"
 win_cfg="$win_home/.config/herdr-app"
 win_bin="$win_home/.local/bin"
 repo_cfg="$here/.config/herdr-app"
@@ -34,8 +34,25 @@ copy_tree() { # src dst
   rsync -a --delete "${excl[@]}" "$src/themes/" "$dst/themes/"
 }
 
+# Files edited in the repo since Windows last changed them: a pull would undo those edits.
+repo_ahead() {
+  local f rel
+  while IFS= read -r f; do
+    rel="${f#"$repo_cfg"/}"
+    [ -f "$win_cfg/$rel" ] && [ "$f" -nt "$win_cfg/$rel" ] && ! cmp -s "$f" "$win_cfg/$rel" && echo "  $rel"
+  done < <(find "$repo_cfg" -type f)
+  return 0
+}
+
 case "${1:-}" in
   pull)
+    ahead="$(repo_ahead)"
+    if [ -n "$ahead" ] && [ -z "${FORCE:-}" ]; then
+      echo "These repo files are newer than the Windows copies; pull would undo them:" >&2
+      echo "$ahead" >&2
+      echo "Run 'push' first (or FORCE=1 to overwrite them)." >&2
+      exit 1
+    fi
     copy_tree "$win_cfg" "$repo_cfg"
     mkdir -p "$repo_bin" && cp "$win_bin/agent_limits_statusline.py" "$repo_bin/"
     # Files copied off the Windows drive come out executable; keep git modes normal.
