@@ -368,9 +368,7 @@ export default class Spaces extends View {
   row({ w, i, g, tree }, t) {
     const on = w.active;
     const fromIndex = this.pressed === null ? -1 : spaces().findIndex(s => s.id === this.pressed);
-    const colors = shared("space.colors") ?? {};
-    const color = colors[w.id] ?? "ansi6";
-    const fill = color.startsWith("#") ? color : (MARK[color] ?? t[color]);
+    const fill = this.fill(w, t);
     return v_flex()
       .relative()
       .id(`space-${w.id}`)
@@ -424,18 +422,27 @@ export default class Spaces extends View {
       );
   }
 
-  compact({ w, i }, t) {
+  // The space's badge color (its pick in the space menu, teal by default).
+  fill(w, t) {
+    const color = (shared("space.colors") ?? {})[w.id] ?? "ansi6";
+    return color.startsWith("#") ? color : (MARK[color] ?? t[color]);
+  }
+
+  // Same number badge as the full row (a plain dim number for a worktree).
+  compact({ w, i, tree }, t) {
     return h_flex()
       .id(`space-${w.id}`)
       .h(26)
-      .px(8)
+      .pl(6).pr(4)
       .flex_none()
       .items_center()
-      .gap(4)
+      .gap(3)
       .when(w.active, (el) => el.bg(t.raised))
       .hover((s) => s.bg(t.hover))
       .on_click(() => run("space.select", { id: w.id }))
-      .child(div().min_w(14).text_color(w.active ? t.foreground : t.muted).child(String(i + 1)))
+      .when(Boolean(tree), (el) => el.child(div().w(18).flex_none().text_size(10.5).text_color(t.dim).child(String(i + 1))))
+      .when(!tree, (el) => el.child(h_flex().size(18).flex_none().rounded(4).bg(this.fill(w, t)).items_center().justify_center()
+        .text_size(10.5).font_bold().text_color(t.accent_foreground).child(String(i + 1))))
       .child(div().text_color(tone(t, w.status)).child(glyph(w.status)));
   }
 

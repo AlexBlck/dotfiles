@@ -39,7 +39,7 @@ repo_ahead() {
   local f rel
   while IFS= read -r f; do
     rel="${f#"$repo_cfg"/}"
-    [ -f "$win_cfg/$rel" ] && [ "$f" -nt "$win_cfg/$rel" ] && ! cmp -s "$f" "$win_cfg/$rel" && echo "  $rel"
+    [ -f "$win_cfg/$rel" ] && [ "$f" -nt "$win_cfg/$rel" ] && ! diff -q --strip-trailing-cr "$f" "$win_cfg/$rel" >/dev/null && echo "  $rel"
   done < <(find "$repo_cfg" -type f)
   return 0
 }
