@@ -18,7 +18,7 @@ repo_bin="$here/.local/bin"
 
 # Paths relative to the herdr-app config folder.
 files=(keys.json settings.json IDEAS.md layouts/alex-black.json)
-mods=(alex-chrome alex-spaces alex-status alex-tabs theme-picker)
+mods=(alex-agents alex-chrome alex-spaces alex-status alex-tabs theme-picker)
 # Herdr ships these themes itself; everything else in themes/ is ours.
 shipped_themes=(atom-one-dark.json win98.json)
 

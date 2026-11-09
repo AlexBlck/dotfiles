@@ -354,17 +354,15 @@ export default class Spaces extends View {
     const branch = same(raw) || raw === "master" || raw === "main" ? "" : raw;
     const repo = tree || same(g.name) ? "" : g.name;
     const where = [repo, branch].filter(Boolean).join(" \u00b7 ");
-    return h_flex()
-      .flex_1()
-      .min_w(0)
-      .gap(5)
-      .justify_end()
-      .items_center()
-      .text_size(11.5)
-      .text_color(t.dim)
-      .when(Boolean(where), (el) => el.child(div().min_w(0).truncate().child(where)))
-      .when(g.ahead > 0, (el) => el.child(div().flex_none().text_color(t.ansi2).child(`\u2191${g.ahead}`)))
-      .when(g.behind > 0, (el) => el.child(div().flex_none().text_color(t.ansi1).child(`\u2193${g.behind}`)));
+    // Siblings of the name, not one box (whose counts spilled left over the name):
+    // the repo/branch gives way first, the counts never shrink, and the name
+    // truncates only when name + counts don't fit.
+    const small = (el) => el.text_size(11.5);
+    return [
+      small(div().flex_1().min_w(0).truncate().text_right().text_color(t.dim).child(where)),
+      ...(g.ahead > 0 ? [small(div().flex_none().text_color(t.ansi2).child(`\u2191${g.ahead}`))] : []),
+      ...(g.behind > 0 ? [small(div().flex_none().text_color(t.ansi1).child(`\u2193${g.behind}`))] : []),
+    ];
   }
 
   row({ w, i, g, tree }, t) {
@@ -421,8 +419,8 @@ export default class Spaces extends View {
           .when(Boolean(tree), el => el.child(div().w(18).flex_none().text_size(10.5).text_color(t.dim).child(String(i + 1)))
             .child(svg("mods/workspace-chrome/branch.svg").size(13).text_color(t.dim)))
           .when(!tree, el => el.child(h_flex().size(18).flex_none().rounded(4).bg(fill).items_center().justify_center().text_size(10.5).font_bold().text_color(t.accent_foreground).child(String(i + 1))))
-          .child(div().flex_shrink(0).max_w(150).truncate().text_color(t.foreground).child(w.name))
-          .child(g ? this.gitTail(g, tree, w.name, t) : div().flex_1()),
+          .child(div().min_w(0).max_w(150).truncate().text_color(t.foreground).child(w.name))
+          .children(g ? this.gitTail(g, tree, w.name, t) : [div().flex_1()]),
       );
   }
 
@@ -430,13 +428,14 @@ export default class Spaces extends View {
     return h_flex()
       .id(`space-${w.id}`)
       .h(26)
+      .px(8)
       .flex_none()
-      .justify_center()
+      .items_center()
       .gap(4)
       .when(w.active, (el) => el.bg(t.raised))
       .hover((s) => s.bg(t.hover))
       .on_click(() => run("space.select", { id: w.id }))
-      .child(div().text_color(w.active ? t.foreground : t.muted).child(String(i + 1)))
+      .child(div().min_w(14).text_color(w.active ? t.foreground : t.muted).child(String(i + 1)))
       .child(div().text_color(tone(t, w.status)).child(glyph(w.status)));
   }
 
