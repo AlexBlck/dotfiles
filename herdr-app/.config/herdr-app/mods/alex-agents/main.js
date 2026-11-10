@@ -238,10 +238,27 @@ export default class Agents extends View {
     const urgency = new Map(list.map((a) => [a.address, Math.max(this.rank(a), ...this.tree(all, a.address).map((s) => RANK[kidStatus(s.t, this.listed)] ?? 0))]));
     const rankOf = (a) => urgency.get(a.address);
     if (byPriority) list = [...list].sort((x, y) => rankOf(y) - rankOf(x) || this.since(y) - this.since(x) || y.seq - x.seq);
+    // A sub-agent that reports its own status is in agents() too: show it once,
+    // in its topmost listed ancestor's tree, not again as a row at every depth.
+    // (The narrow rail draws no trees, so it keeps every agent.)
+    const byAddr = new Map(all.map((k) => [k.address, k]));
+    const listedSet = new Set(list.map((a) => a.address));
+    const nested = (a) => {
+      const seen = new Set();
+      for (let p = byAddr.get(a.address)?.parent; p && !seen.has(p); p = byAddr.get(p)?.parent) {
+        seen.add(p);
+        if (byAddr.get(p)?.state !== "live") return false; // tree() stops at a dead link
+        if (listedSet.has(p)) return true;
+      }
+      return false;
+    };
+    if (!collapsed) list = list.filter((a) => !nested(a));
     const pinned = list.filter((a) => a.pinned);
     const rest = list.filter((a) => !a.pinned);
     list = [...pinned, ...rest];
-    setAgentOrder(list.map((a) => a.address));
+    // agent.next / agent.prev follow the rows as drawn, nested agents included.
+    setAgentOrder(collapsed ? list.map((a) => a.address)
+      : list.flatMap((a) => [a.address, ...this.tree(all, a.address).map((s) => s.t.address).filter((x) => listedSet.has(x))]));
 
     const withKids = (a, i) => {
       const subs = collapsed ? [] : this.tree(all, a.address);
