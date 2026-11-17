@@ -90,7 +90,8 @@
     "ctrl-shift-*": "space.select:8",
     "ctrl-(": "space.select:9",
     "ctrl-shift-(": "space.select:9",
-    "ctrl-shift-m": "mod.open:theme-picker"
+    "ctrl-shift-m": "mod.open:theme-picker",
+    "ctrl-shift-r": "mod.open:md-viewer"
   },
   "terminal": {
     "ctrl-backspace": "send:\u0017",
