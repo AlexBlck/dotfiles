@@ -23,9 +23,12 @@ function tidy(cwd, machine) {
 }
 
 function parse(out) {
-  const s = { ahead: 0, behind: 0, staged: 0, modified: 0, untracked: 0, conflicts: 0 };
+  const s = { branch: null, ahead: 0, behind: 0, staged: 0, modified: 0, untracked: 0, conflicts: 0 };
   for (const line of out.split("\n")) {
-    if (line.startsWith("# branch.ab ")) {
+    if (line.startsWith("# branch.head ")) {
+      const head = line.slice(14).trim();
+      if (head !== "(detached)") s.branch = head;
+    } else if (line.startsWith("# branch.ab ")) {
       const [, a, b] = line.match(/\+(\d+) -(\d+)/) ?? [];
       s.ahead = +a || 0; s.behind = +b || 0;
     } else if (line.startsWith("1 ") || line.startsWith("2 ")) {
@@ -47,6 +50,7 @@ const clock = () => { const d = new Date(); return `${String(d.getHours()).padSt
 export default class AlexStatus extends View {
   init(_props, cx) {
     this.git = {};      // key -> parsed status
+    this.asked = {};    // key -> when a folder Herdr gives no branch for was last asked
     this.hosts = {};    // machine ("" = local) -> hostname
     this.busy = false;
     this.ctx = {};      // terminal address -> context record
@@ -94,7 +98,11 @@ export default class AlexStatus extends View {
         cx.notify();
       });
     }
-    if (!cwd || !branch || this.busy) return;
+    if (!cwd || this.busy) return;
+    // Herdr's branch is empty in a repo with no commits yet, so it can't decide
+    // whether to ask git. Folders without one are just asked less often.
+    if (!branch && Date.now() - (this.asked[key] ?? 0) < 30000) return;
+    this.asked[key] = Date.now();
     this.busy = true;
     cx.spawn(async (cx) => {
       try {
@@ -108,11 +116,12 @@ export default class AlexStatus extends View {
 
   render(cx) {
     const t = theme();
-    const { machine, cwd, branch, terminal, claude, key } = this.target();
+    const { machine, cwd, branch: paneBranch, terminal, claude, key } = this.target();
     const shown = `${key}|${terminal}`;
     if (shown !== this.shownKey) { this.shownKey = shown; this.refresh(cx); }   // new pane/folder: don't wait 3 s
     const folder = tidy(cwd, machine);
-    const g = branch ? this.git[key] : null;
+    const g = this.git[key] ?? null;
+    const branch = paneBranch || g?.branch;
     const dirty = g && (g.staged || g.modified || g.untracked || g.conflicts);
     const branchColor = dirty ? t.ansi3 : t.ansi2;
     const mono = settings().font_family ?? "FiraCode Nerd Font Mono";
